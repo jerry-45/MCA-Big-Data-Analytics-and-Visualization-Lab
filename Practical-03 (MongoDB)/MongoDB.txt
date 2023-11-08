@@ -2,7 +2,13 @@ insert()
 find()
 findOne({"id":67})
 
-find().sort({"id":1})       // based on id ascending order
-find().sort({"id":-1})      // based on id decesnding order
+find().sort({"id":1})               // based on id ascending order
+find().sort({"id":-1})              // based on id decesnding order
 
-db.test.drop()              // will delete the collection named test    
+db.test.drop()                      // will delete the collection named test
+
+db.doctor.remove({"id":"D104"})     // removing particular record
+
+show dbs
+use testDB
+db.dropDatabase()                   // to delete a database
