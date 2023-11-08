@@ -1,0 +1,8 @@
+insert()
+find()
+findOne({"id":67})
+
+find().sort({"id":1})       // based on id ascending order
+find().sort({"id":-1})      // based on id decesnding order
+
+db.test.drop()              // will delete the collection named test    

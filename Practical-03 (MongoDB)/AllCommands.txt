@@ -1,0 +1,118 @@
+Microsoft Windows [Version 10.0.15063]
+(c) 2017 Microsoft Corporation. All rights reserved.
+
+C:\Users\Admin>mongosh
+Current Mongosh Log ID: 6544925031ff57cb1080d5c5
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.0.2
+Using MongoDB:          7.0.2
+Using Mongosh:          2.0.2
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2023-11-03T11:55:07.129+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show dbs
+StudentDB    72.00 KiB
+ValorantDB   80.00 KiB
+admin        40.00 KiB
+config      108.00 KiB
+local        40.00 KiB
+test> use ValorantDB
+switched to db ValorantDB
+ValorantDB> show collections
+Agents
+Weapons
+ValorantDB> db.Agents.find()
+[
+  {
+    _id: ObjectId("65448f34be0f45319343b8f1"),
+    id: 11,
+    AgentName: 'Sova',
+    AgentType: 'Initiator'
+  },
+  {
+    _id: ObjectId("65448f34be0f45319343b8f2"),
+    id: 12,
+    AgentName: 'Cypher',
+    AgentType: 'Sentinel'
+  },
+  {
+    _id: ObjectId("65448f34be0f45319343b8f3"),
+    id: 13,
+    AgentName: 'Jett',
+    AgentType: 'Duelist'
+  }
+]
+ValorantDB> db.Agents.find({"id":{$lt:13}})
+[
+  {
+    _id: ObjectId("65448f34be0f45319343b8f1"),
+    id: 11,
+    AgentName: 'Sova',
+    AgentType: 'Initiator'
+  },
+  {
+    _id: ObjectId("65448f34be0f45319343b8f2"),
+    id: 12,
+    AgentName: 'Cypher',
+    AgentType: 'Sentinel'
+  }
+]
+ValorantDB> db.Agents.find({"id":{$lt:13}}).pretty()
+[
+  {
+    _id: ObjectId("65448f34be0f45319343b8f1"),
+    id: 11,
+    AgentName: 'Sova',
+    AgentType: 'Initiator'
+  },
+  {
+    _id: ObjectId("65448f34be0f45319343b8f2"),
+    id: 12,
+    AgentName: 'Cypher',
+    AgentType: 'Sentinel'
+  }
+]
+ValorantDB> db.Agents.find({"id":{$gt:11}})
+[
+  {
+    _id: ObjectId("65448f34be0f45319343b8f2"),
+    id: 12,
+    AgentName: 'Cypher',
+    AgentType: 'Sentinel'
+  },
+  {
+    _id: ObjectId("65448f34be0f45319343b8f3"),
+    id: 13,
+    AgentName: 'Jett',
+    AgentType: 'Duelist'
+  }
+]
+ValorantDB> db.Agents.find({"AgentName":{$in:["Jett","Sova"]}})
+[
+  {
+    _id: ObjectId("65448f34be0f45319343b8f1"),
+    id: 11,
+    AgentName: 'Sova',
+    AgentType: 'Initiator'
+  },
+  {
+    _id: ObjectId("65448f34be0f45319343b8f3"),
+    id: 13,
+    AgentName: 'Jett',
+    AgentType: 'Duelist'
+  }
+]
+ValorantDB> db.Agents.find({"AgentName":{$nin:["Jett","Sova"]}})
+[
+  {
+    _id: ObjectId("65448f34be0f45319343b8f2"),
+    id: 12,
+    AgentName: 'Cypher',
+    AgentType: 'Sentinel'
+  }
+]
+ValorantDB>
