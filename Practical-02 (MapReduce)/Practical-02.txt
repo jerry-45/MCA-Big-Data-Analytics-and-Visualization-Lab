@@ -1,0 +1,16 @@
+**Write a program in Hadoop (Map Reduce) to perform Union Operation**
+
+File -> Java -> Project -> Name: Union -> Next 
+-> Add External JARs -> "/usr/lib/hadoop/" -> Select all .jar files
+-> Add External JARs -> "/usr/lib/hadoop/client/" -> Select all .jar files
+-> Right click on created project -> New -> Class -> Name: Union -> Code
+
+We will be required two text files -> Multiple input
+
+GenericOptionsParser
+- GenericOptionsParser is a utility to parse command line arguments generic to hadoop framework.
+- GenericOptionsParser recognize several standard command line arguments enabling applications to easily 
+  specify namenode, job tracker, additional configuration resources, etc
+
+WordMapper  --> map()
+WordReducer --> reduce()

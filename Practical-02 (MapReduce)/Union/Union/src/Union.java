@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.StringTokenizer;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.FileSystem;
@@ -16,17 +15,17 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
-public class Union{
+public class Union {
 	public static class MultipleMaps extends Mapper<LongWritable, Text, Text, IntWritable>{
 		private final static IntWritable one = new IntWritable();
 		
-		// creating object for Text
+		//creating object for Text
+		
 		private Text keyEmit = new Text();
 		
-		private void map(Object key, Text value, Context context) throws IOException, InterruptedException{
+		public void map(LongWritable k, Text value, Context context) throws IOException, InterruptedException{
 			StringTokenizer itr = new StringTokenizer(value.toString());
-			
-			while(itr.hasMoreElements()) {
+			while(itr.hasMoreElements()){
 				keyEmit.set(itr.nextToken());
 				context.write(keyEmit, one);
 			}
@@ -34,13 +33,14 @@ public class Union{
 	}
 	
 	public static class MultipleReducer extends Reducer<Text, IntWritable, Text, IntWritable>{
+		
 		private IntWritable result = new IntWritable();
 		
 		public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException{
 			int sum = 0;
 			
-			for(IntWritable val : values) {
-				sum += val.get();
+			for(IntWritable val : values){
+				sum = sum + val.get();
 			}
 			
 			result.set(sum);
@@ -48,27 +48,27 @@ public class Union{
 		}
 	}
 	
-	public static void main(String[] args) throws Exception{
-		if(args.length != 3) {
-			System.err.println("Number of arguments must be 3!!!");
+	public static void main(String args[]) throws Exception{
+		if(args.length != 3){
+			System.err.println("Number of arguments must be 3...");
 			System.exit(0);
 		}
 		
-		Configuration conf = new Configuration();
-		String[] files = new GenericOptionsParser(conf, args).getRemainingArgs();
+		Configuration c = new Configuration();
+		String[] files = new GenericOptionsParser(c, args).getRemainingArgs();
 		
-		// providing paths
+		// proividing paths
 		Path p1 = new Path(files[0]);
-		Path p2 = new Path(files[2]);
-		Path p3 = new Path(files[3]);
+		Path p2 = new Path(files[1]);
+		Path p3 = new Path(files[2]);
 		
-		FileSystem fs = FileSystem.get(conf);
+		FileSystem fs = FileSystem.get(c);
 		
-		if(fs.exists(p3)) {
+		if(fs.exists(p3)){
 			fs.delete(p3, true);
 		}
 		
-		Job job = Job.getInstance(conf, "Union of two files");
+		Job job = Job.getInstance(c, "Union of 2 files.");
 		job.setJarByClass(Union.class);
 		
 		MultipleInputs.addInputPath(job, p1, TextInputFormat.class, MultipleMaps.class);
@@ -82,6 +82,6 @@ public class Union{
 		FileOutputFormat.setOutputPath(job, p3);
 		
 		boolean success = job.waitForCompletion(true);
-		System.exit(success ? 0 : 1);
+		System.exit(success ? 0:1);
 	}
 }

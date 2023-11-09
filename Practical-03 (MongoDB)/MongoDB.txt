@@ -1,0 +1,24 @@
+insert()
+find()
+findOne({"id":67})
+
+
+find().sort({"id":1})               // based on id ascending order
+find().sort({"id":-1})              // based on id decesnding order
+
+db.test.drop()                      // will delete the collection named test
+
+db.doctor.remove({"id":"D104"})     // removing particular record
+
+show dbs
+use testDB
+db.dropDatabase()                   // to delete a database
+
+
+db.employee.insert({"userid":"mca","jobTitle":"Developer","fname":"Robin","lname":"hood","empcode":"m11","region":"java","contact":"9876543215","email":"robin.hood@gmail.com","age":34})
+db.employee.insert({"userid":"mca","jobTitle":"Cloud Engineer","fname":"Pushpak","lname":"Rathod","empcode":"m12","region":"AWS","contact":"9876543515","email":"pushpak.rathod@gmail.com","age":22})
+db.employee.insert({"userid":"mba","jobTitle":"Manager","fname":"Tom","lname":"Cruise","empcode":"m45","region":"bank","contact":"4567891235","email":"tom.cruise@gmail.com","age":40})
+db.employee.insert({"userid":"mca","jobTitle":"Network Engineer","fname":"Atul","lname":"Vishwakarma","empcode":"m15","region":"Network","contact":"9833568974","email":"atul.vishwakarma@gmail.com","age":22})
+db.employee.insert({"userid":"mba","jobTitle":"Manager","fname":"Jack","lname":"Ryan","empcode":"m50","region":"bank","contact":"4567851235","email":"jack.ryan@gmail.com","age":36})
+
+db.employee.find({"userid":"mca"}).limit(2)
